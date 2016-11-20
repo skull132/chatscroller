@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div onclick="chatController.swapTab(0)">tab 0</div>
+    <div onclick="chatController.swapTab(1)">tab 1</div>
+    <div onclick="chatController.swapTab(2)">tab 2</div>
+    <div id="chat"></div>
+    <script src="index.js"></script>
+
+    <script>
+      var chatController = Chat(document.getElementById('chat'));
+      var contexts = [['OOC'],['OOC','GOOC'], ['OOC','LOOC'], ['admin'], ['admin', 'admin fight']];
+      function randomContext() {
+        return contexts[Math.floor(Math.random() * contexts.length)];
+      }
+
+      var messages = ['asfajsldfjkj','dsgs gsgs?', 'agasdlgja'];
+      function randomMessage() {
+        return messages[Math.floor(Math.random() * messages.length)];
+      }
+
+      function makeMessage() {
+        chatController.addMessage(JSON.stringify({content: randomMessage(), context: randomContext()}));
+      }
+
+      setInterval(makeMessage, 300);
+    </script>
+  </body>
+</html>
