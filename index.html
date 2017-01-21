@@ -1,33 +1,96 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div onclick="chatController.swapTab(0)">tab 0</div>
-    <div onclick="chatController.swapTab(1)">tab 1</div>
-    <div onclick="chatController.swapTab(2)">tab 2</div>
-    <div id="chat"></div>
-    <script src="index.js"></script>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style>
+            .header-container {
+                width: 100%;
+                position: fixed;
+                top: 0;
+            }
+            .header {
+                height: 1.5em;
+                background: #b7b7b7;
+                float: right;
+                padding-left: 1em;
+                padding-right: 1em;
+                margin-left: 0.5em;
+                margin-right: 0.5em;
+            }
 
-    <script>
-      var chatController = Chat(document.getElementById('chat'));
-      var contexts = [['OOC'],['OOC','GOOC'], ['OOC','LOOC'], ['admin'], ['admin', 'admin fight']];
-      function randomContext() {
-        return contexts[Math.floor(Math.random() * contexts.length)];
-      }
+            .dropdown {
+                cursor: pointer;
+                position: relative;
+                display: inline-block;
+            }
 
-      var messages = ['asfajsldfjkj','dsgs gsgs?', 'agasdlgja'];
-      function randomMessage() {
-        return messages[Math.floor(Math.random() * messages.length)];
-      }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
 
-      function makeMessage() {
-        chatController.addMessage(JSON.stringify({content: randomMessage(), context: randomContext()}));
-      }
+            .dropdown-content div {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
 
-      setInterval(makeMessage, 300);
-    </script>
-  </body>
+            .dropdown-content div:hover {
+                font-weight: bold;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .enabled {
+                background: #00bb00;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header-container">
+            <div class="header" onclick="chatController.swapTab(0)">OOC</div>
+            <div class="header" onclick="chatController.swapTab(1)">IC</div>
+            <div class="header" onclick="chatController.swapTab(2)">Admin</div>
+            <div class="header dropdown">
+                <div onclick="chatController.swapTab(3)">Mixed</div>
+                <div class="dropdown-content">
+                    <div id="OOC" onclick="chatController.toggleMixed('OOC')">OOC</div>
+                    <div id="LOOC" onclick="chatController.toggleMixed('LOOC')">LOOC</div>
+                    <div id="IC" onclick="chatController.toggleMixed('IC')">IC</div>
+                    <div id="LOGS" onclick="chatController.toggleMixed('LOGS')">LOGS</div>
+                    <div id="MSAY" onclick="chatController.toggleMixed('MSAY')">MSAY</div>
+                    <div id="ASAY" onclick="chatController.toggleMixed('ASAY')">ASAY</div>
+                    <div id="PMS" onclick="chatController.toggleMixed('PMS')">PMS</div>
+                </div>
+            </div>
+        </div>
+        <div id="chat"></div>
+        <script src="index.js"></script>
+
+        <script>
+          var chatController = Chat(document.getElementById('chat'));
+          var contexts = ['OOC','IC', 'LOOC', 'ALOG'];
+          function randomContext() {
+            return contexts[Math.floor(Math.random() * contexts.length)];
+          }
+
+          var messages = ['asfajsldfjkj','dsgs gsgs?', 'agasdlgja', '_test_ yay, shit.', "*mark two* and three.", "~memes~", "/bad/"];
+          function randomMessage() {
+            return messages[Math.floor(Math.random() * messages.length)];
+          }
+
+          function makeMessage() {
+            chatController.addMessage(JSON.stringify({content: randomMessage(), context: randomContext()}));
+          }
+
+          setInterval(makeMessage, 100);
+        </script>
+    </body>
 </html>
