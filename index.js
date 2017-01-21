@@ -3,7 +3,7 @@ var Chat = function (bindTo) {
     var messages = [];
     var contexts = {
         OOC: {
-            accepted_tags: [
+            markup: [
                 [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
                 [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"],
                 [/((\W|^)~)([^~]*)(~(\W|$))/, "<strike>", "</strike>"],
@@ -11,7 +11,7 @@ var Chat = function (bindTo) {
             ]
         },
         LOOC: {
-            accepted_tags: [
+            markup: [
                 [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
                 [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"],
                 [/((\W|^)~)([^~]*)(~(\W|$))/, "<strike>", "</strike>"],
@@ -19,22 +19,22 @@ var Chat = function (bindTo) {
             ]
         },
         IC: {
-            accepted_tags: [
+            markup: [
                 [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
                 [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"]
             ]
         },
         LOGS: {
-            accepted_tags: []
+            markup: []
         },
         MSAY: {
-            accepted_tags: []
+            markup: []
         },
         ASAY: {
-            accepted_tags: []
+            markup: []
         },
         PMS: {
-            accepted_tags: []
+            markup: []
         }
     };
     var tabs = [
@@ -74,19 +74,23 @@ var Chat = function (bindTo) {
     function displayMessage(message) {
         var node = nodeFromMessage(message);
         el.appendChild(node);
-        node.scrollIntoView();
         currentSize += 1;
 
         if (currentSize > tabMax) {
             el.removeChild(el.firstChild);
             currentSize -= 1;
         }
+
+        // Autoscroll the thing if we're near the bottom.
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 10) {
+            node.scrollIntoView();
+        }
     }
 
     function parseMarkup(message, tab) {
         var msg = message.content;
-        for (var i = 0; i < tab[message.context].accepted_tags.length; i++) {
-            msg = msg.replace(tab[message.context].accepted_tags[i][0], "$2" + tab[message.context].accepted_tags[i][1] + "$3" + tab[message.context].accepted_tags[i][2] + "$5");
+        for (var i = 0; i < tab[message.context].markup.length; i++) {
+            msg = msg.replace(tab[message.context].markup[i][0], "$2" + tab[message.context].markup[i][1] + "$3" + tab[message.context].markup[i][2] + "$5");
         }
         return msg;
     }
