@@ -51,6 +51,18 @@
             .enabled {
                 background: #00bb00;
             }
+
+            @keyframes alter-flash {
+                0%  {background-color: #b7b7b7;}
+                33% {background-color: #ff3138;}
+                77% {background-color: #b7b7b7;}
+            }
+
+            .alerted {
+                animation-name: alter-flash;
+                animation-duration: 2s;
+                animation-iteration-count: infinite;
+            }
         </style>
     </head>
     <body>
@@ -75,22 +87,63 @@
         <script src="index.js"></script>
 
         <script>
-          var chatController = Chat(document.getElementById('chat'));
-          var contexts = ['OOC','IC', 'LOOC', 'ALOG'];
-          function randomContext() {
-            return contexts[Math.floor(Math.random() * contexts.length)];
-          }
+            var chatController = Chat(document.getElementById('chat'));
+            var contexts = ['OOC','IC', 'LOOC', 'ALOG'];
+            function randomContext() {
+                return contexts[Math.floor(Math.random() * contexts.length)];
+            }
 
-          var messages = ['asfajsldfjkj','dsgs gsgs?', 'agasdlgja', '_test_ yay, shit.', "*mark two* and three.", "~memes~", "/bad/"];
-          function randomMessage() {
-            return messages[Math.floor(Math.random() * messages.length)];
-          }
+            var messages = ['asfajsldfjkj','dsgs gsgs?', 'agasdlgja', '_test_ yay, shit.', "*mark two* and three.", "~memes~", "/bad/"];
+            function randomMessage() {
+                return messages[Math.floor(Math.random() * messages.length)];
+            }
 
-          function makeMessage() {
-            chatController.addMessage(JSON.stringify({content: randomMessage(), context: randomContext()}));
-          }
+            function makeMessage() {
+                chatController.addMessage(JSON.stringify({content: randomMessage(), context: randomContext()}));
+            }
 
-          setInterval(makeMessage, 100);
+            function setCookie(cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                var expires = "expires="+ d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function getCookie(cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            var loadData = getCookie("AuroraOutput");
+
+            if (loadData) {
+                loadData = JSON.parse(loadData);
+                if (loadData['savedMix']) {
+                    for (var i = 0; i < loadData['savedMix'].length; i++) {
+                        chatController.toggleMixed(loadData['savedMix'][i]);
+                    }
+                }
+            }
+
+            window.onbeforeunload = function(){
+                var saveData = {
+                    savedMix: chatController.saveMixed()
+                };
+
+                setCookie("AuroraOutput", JSON.stringify(saveData), 900);
+            };
+
+            setInterval(makeMessage, 100);
         </script>
     </body>
 </html>

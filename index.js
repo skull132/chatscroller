@@ -48,7 +48,7 @@ var Chat = function (bindTo) {
         {}
     ];
     var maxMessages = 50000;
-    var cullMessages = 1000;
+    var cullMessages = 5000;
     var tabMax = 1000;
 
     var currentTab = tabs[0];
@@ -140,6 +140,15 @@ var Chat = function (bindTo) {
                 tabs[3][context] = contexts[context];
                 document.getElementById(context).className = "enabled";
             }
+        },
+
+        saveMixed: function saveMixed() {
+            var data = [];
+            for (var name in tabs[3]) {
+                data.push(name);
+            }
+
+            return data;
         }
     };
 };
