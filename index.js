@@ -149,7 +149,10 @@ var Chat = function (bindTo) {
         saveMixed: function saveMixed() {
             var data = [];
             for (var name in tabs[3]) {
-                data.push(name);
+                if (tabs[3].hasOwnProperty(name))
+                {
+                    data.push(name);
+                }
             }
 
             return data;
