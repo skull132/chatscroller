@@ -4,24 +4,24 @@ var Chat = function (bindTo) {
     var contexts = {
         OOC: {
             markup: [
-                [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
-                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"],
-                [/((\W|^)~)([^~]*)(~(\W|$))/, "<strike>", "</strike>"],
-                [/((\W|^)_)([^_]*)(_(\W|$))/, "<u>", "</u>"]
+                [/((\W|^)\*)([^*]*)(\*(\W|$))/, '<b>', '</b>'],
+                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, '<i>', '</i>'],
+                [/((\W|^)~)([^~]*)(~(\W|$))/, '<strike>', '</strike>'],
+                [/((\W|^)_)([^_]*)(_(\W|$))/, '<u>', '</u>']
             ]
         },
         LOOC: {
             markup: [
-                [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
-                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"],
-                [/((\W|^)~)([^~]*)(~(\W|$))/, "<strike>", "</strike>"],
-                [/((\W|^)_)([^_]*)(_(\W|$))/, "<u>", "</u>"]
+                [/((\W|^)\*)([^*]*)(\*(\W|$))/, '<b>', '</b>'],
+                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, '<i>', '</i>'],
+                [/((\W|^)~)([^~]*)(~(\W|$))/, '<strike>', '</strike>'],
+                [/((\W|^)_)([^_]*)(_(\W|$))/, '<u>', '</u>']
             ]
         },
         IC: {
             markup: [
-                [/((\W|^)\*)([^*]*)(\*(\W|$))/, "<b>", "</b>"],
-                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, "<i>", "</i>"]
+                [/((\W|^)\*)([^*]*)(\*(\W|$))/, '<b>', '</b>'],
+                [/((\W|^)\/)([^\/]*)(\/(\W|$))/, '<i>', '</i>']
             ]
         },
         LOGS: {
@@ -90,7 +90,7 @@ var Chat = function (bindTo) {
     function parseMarkup(message, tab) {
         var msg = message.content;
         for (var i = 0; i < tab[message.context].markup.length; i++) {
-            msg = msg.replace(tab[message.context].markup[i][0], "$2" + tab[message.context].markup[i][1] + "$3" + tab[message.context].markup[i][2] + "$5");
+            msg = msg.replace(tab[message.context].markup[i][0], '$2' + tab[message.context].markup[i][1] + '$3' + tab[message.context].markup[i][2] + '$5');
         }
         return msg;
     }
@@ -138,11 +138,11 @@ var Chat = function (bindTo) {
         toggleMixed: function toggleMixed(context) {
             if (tabs[3].hasOwnProperty(context)) {
                 delete tabs[3][context];
-                document.getElementById(context).className = "";
+                document.getElementById(context).className = '';
             }
             else {
                 tabs[3][context] = contexts[context];
-                document.getElementById(context).className = "enabled";
+                document.getElementById(context).className = 'enabled';
             }
         },
 
