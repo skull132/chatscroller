@@ -135,6 +135,12 @@ var Chat = function (bindTo) {
             }
 
             old.parentNode.replaceChild(el, old);
+
+            // Scroll the last node into view if our new tab is longer than the
+            // old one.
+            if (el.lastChild) {
+                el.lastChild.scrollIntoView();
+            }
         },
 
         toggleMixed: function toggleMixed(context) {
