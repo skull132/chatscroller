@@ -67,11 +67,11 @@
     </head>
     <body>
         <div class="header-container">
-            <div class="header" onclick="chatController.swapTab(0)">OOC</div>
-            <div class="header" onclick="chatController.swapTab(1)">IC</div>
-            <div class="header" onclick="chatController.swapTab(2)">Admin</div>
+            <div class="header" onclick="chatController.swapTab('OOC')">OOC</div>
+            <div class="header" onclick="chatController.swapTab('IC')">IC</div>
+            <div class="header" onclick="chatController.swapTab('ADMIN')">Admin</div>
             <div class="header dropdown">
-                <div onclick="chatController.swapTab(3)">Mixed</div>
+                <div onclick="chatController.swapTab('CUSTOM')">Mixed</div>
                 <div class="dropdown-content">
                     <div id="OOC" onclick="chatController.toggleMixed('OOC')">OOC</div>
                     <div id="LOOC" onclick="chatController.toggleMixed('LOOC')">LOOC</div>

@@ -37,21 +37,23 @@ var Chat = function (bindTo) {
             markup: []
         }
     };
-    var tabs = [
+
+    var tabs = {
         // Global OOC tab
-        {OOC: contexts.OOC, MSAY: contexts.MSAY, ASAY: contexts.ASAY, PMS: contexts.PMS},
+        OOC:    {OOC: contexts.OOC, MSAY: contexts.MSAY, ASAY: contexts.ASAY, PMS: contexts.PMS},
         // IC tab
-        {IC: contexts.IC, LOOC: contexts.LOOC, PMS: contexts.PMS},
+        IC:     {IC: contexts.IC, LOOC: contexts.LOOC, PMS: contexts.PMS},
         // Admin tab
-        {LOGS: contexts.LOGS},
+        ADMIN:  {LOGS: contexts.LOGS},
         // Custom tab
-        {}
-    ];
+        CUSTOM: {}
+    };
+
     var maxMessages = 50000;
     var cullMessages = 5000;
     var tabMax = 1000;
 
-    var currentTab = tabs[0];
+    var currentTab = tabs.OOC;
     var currentSize = 0;
 
     // check if a tab should show this message
@@ -136,20 +138,20 @@ var Chat = function (bindTo) {
         },
 
         toggleMixed: function toggleMixed(context) {
-            if (tabs[3].hasOwnProperty(context)) {
-                delete tabs[3][context];
+            if (tabs.CUSTOM.hasOwnProperty(context)) {
+                delete tabs.CUSTOM[context];
                 document.getElementById(context).className = '';
             }
             else {
-                tabs[3][context] = contexts[context];
+                tabs.CUSTOM[context] = contexts[context];
                 document.getElementById(context).className = 'enabled';
             }
         },
 
         saveMixed: function saveMixed() {
             var data = [];
-            for (var name in tabs[3]) {
-                if (tabs[3].hasOwnProperty(name))
+            for (var name in tabs.CUSTOM) {
+                if (tabs.CUSTOM.hasOwnProperty(name))
                 {
                     data.push(name);
                 }
